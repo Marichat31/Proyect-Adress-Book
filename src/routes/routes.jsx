@@ -13,6 +13,7 @@ import { action as destroyAction } from "../pages/destroy.jsx";
 const routes = createRoutesFromElements(
   <>
     <Route path="/" element={<Navigate to="/contacts" replace />} />
+
     <Route
       path="/contacts"
       element={<Root />}
@@ -23,7 +24,7 @@ const routes = createRoutesFromElements(
       <Route errorElement={<ErrorPage />}>
         <Route index element={<Index />} />
         <Route
-          path="contacts/:contactId"
+          path=":contactId"
           element={<Contact />}
           loader={contactLoader}
           action={favoriteAction}
@@ -34,7 +35,7 @@ const routes = createRoutesFromElements(
           loader={contactLoader}
           action={editContactAction}
         />
-        <Route path="contacts/:contactId/destroy" action={destroyAction} />
+        <Route path=":contactId/destroy" action={destroyAction} />
       </Route>
     </Route>
   </>
