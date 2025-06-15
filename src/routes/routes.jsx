@@ -23,7 +23,7 @@ const routes = createRoutesFromElements(
       <Route errorElement={<ErrorPage />}>
         <Route index element={<Index />} />
         <Route
-          path=":contactId"
+          path="contacts/:contactId"
           element={<Contact />}
           loader={contactLoader}
           action={favoriteAction}
