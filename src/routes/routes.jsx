@@ -34,7 +34,7 @@ const routes = createRoutesFromElements(
           loader={contactLoader}
           action={editContactAction}
         />
-        <Route path=":contactId/destroy" action={destroyAction} />
+        <Route path="contacts/:contactId/destroy" action={destroyAction} />
       </Route>
     </Route>
   </>
