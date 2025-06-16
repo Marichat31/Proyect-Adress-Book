@@ -1,4 +1,4 @@
-export { default as Index } from "./home.jsx";
+export { default as Index } from "./Index.jsx";
 export { default as Contact } from "./contact.jsx";
 export { default as EditContact } from "./edit.jsx";
 export { default as Welcome } from "./welcome.jsx";
