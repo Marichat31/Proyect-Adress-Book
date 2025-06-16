@@ -19,7 +19,21 @@ export async function createContact() {
     let contacts = await getContacts();
     contacts.unshift(contact);
     await set(contacts);
-    return contact
+    return contact;
+}
+
+export async function createContactWithData(data) {
+    await fakeNetWork();
+    // Se hace la validacion
+    if (!data.first || !data.last || !data.twitter || !data.notes) {
+        throw new Error("Nombre, apellido, Twitter y descripción son obligatorios");
+    }
+    let id = Math.random().toString(36).substring(2, 9);
+    let contact = { id, createdAt: Date.now(), ...data };
+    let contacts = await getContacts();
+    contacts.unshift(contact);
+    await set(contacts);
+    return contact;
 }
 
 export async function getContact(id) {
@@ -31,9 +45,18 @@ export async function getContact(id) {
 
 export async function updateContact(id, updates) {
     await fakeNetWork();
+    // Validacións no sean vacíos si se proporcionan
+    if (
+        updates.first === "" ||
+        updates.last === "" ||
+        updates.twitter === "" ||
+        updates.notes === ""
+    ) {
+        throw new Error("Nombre, apellido, Twitter y descripción no pueden estar vacíos");
+    }
     let contacts = await localforage.getItem("contacts");
     let contact = contacts.find(contact => contact.id === id);
-    if (!contact) throw new Error("No contact found for", id);
+    if (!contact) throw new Error(`No se encontró contacto con id: ${id}`);
     Object.assign(contact, updates);
     await set(contacts);
     return contact;
@@ -53,12 +76,14 @@ export async function deleteContact(id) {
 function set(contacts) {
     return localforage.setItem("contacts", contacts);
 }
-//Simula un cache para no relantizar las cosas que ya se vieron
+
+// Simula un cache para no ralentizar las cosas que ya se vieron
 let fakeCache = {};
 
 async function fakeNetWork(key) {
     if (!key) {
         fakeCache = {};
+        return;
     }
     if (fakeCache[key]) {
         return;
@@ -66,6 +91,6 @@ async function fakeNetWork(key) {
 
     fakeCache[key] = true;
     return new Promise(res => {
-        setTimeout(res, Math.random() * 800);
+        setTimeout(res, 0);
     });
 }

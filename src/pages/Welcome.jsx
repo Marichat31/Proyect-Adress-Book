@@ -1,4 +1,3 @@
-// src/pages/Welcome.jsx
 import { useNavigate } from "react-router-dom";
 
 export default function Welcome() {
